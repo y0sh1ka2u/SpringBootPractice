@@ -34,6 +34,9 @@ public class ContactController {
         }
 
         HttpSession session = request.getSession();
+        
+        System.out.println("TESTTEST");
+        
         session.setAttribute("contactForm", contactForm);
 
         return "redirect:/contact/confirm";
