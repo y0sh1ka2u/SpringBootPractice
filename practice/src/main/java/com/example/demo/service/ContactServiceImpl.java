@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,11 @@ import com.example.demo.repository.ContactRepository;
 public class ContactServiceImpl implements ContactService {
     @Autowired
       private ContactRepository contactRepository;
+    
+    @Override
+    public List<Contact> fetchContactList() {
+    	return contactRepository.findAll();
+    } 
 
     @Override
     public void saveContact(ContactForm contactForm) {
