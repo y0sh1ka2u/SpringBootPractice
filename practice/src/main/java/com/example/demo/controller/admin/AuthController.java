@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.form.SigninForm;
 import com.example.demo.form.SignupForm;
-import com.example.demo.service.AdminService;
+import com.example.demo.service.AdminServiceImpl;
 
 @Controller
 @RequestMapping("/admin")
 public class AuthController {
 	@Autowired
-    private AdminService adminService;
+    private AdminServiceImpl adminServiceImpl;
 
 	@GetMapping("/signup")
     public String signupForm(Model model) {
@@ -26,7 +26,7 @@ public class AuthController {
 
 	@PostMapping("/signup")
     public String signupSubmit(@ModelAttribute SignupForm signupForm) {
-		adminService.save(signupForm);
+		adminServiceImpl.save(signupForm);
 
 		return "redirect:/admin/signin";
     }
@@ -34,6 +34,7 @@ public class AuthController {
     @GetMapping("/signin")
     public String signinForm(Model model) {
     	model.addAttribute("signinForm", new SigninForm());
-        return "/admin/signin";
+
+    	return "/admin/signin";
     }
 }

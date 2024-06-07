@@ -9,16 +9,12 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
+    @SuppressWarnings("deprecation")
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeRequests(authorizeRequests -> authorizeRequests
-                               .requestMatchers("/admin/signup", "/admin/signin").permitAll()
+                               .requestMatchers("/contact/**", "/admin/signup", "/admin/signin").permitAll()
                                .requestMatchers("/admin/**").authenticated()
                                .anyRequest().authenticated()
             )
@@ -26,11 +22,20 @@ public class SecurityConfig {
                        .loginPage("/admin/signin")
                        .defaultSuccessUrl("/admin/contacts", true)
                        .permitAll()
+                       .usernameParameter("email")
             )
-            .logout(logout -> logout
-                    .permitAll()
-            );
+            .logout(logout ->
+	            logout
+	                .logoutUrl("/admin/signout") // ログアウトURLを明示的に指定
+	                .logoutSuccessUrl("/admin/signin") // ログアウト成功後のリダイレクト先
+	                .permitAll()
+	        );
 
         return http.build();
+    }
+    
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
