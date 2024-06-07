@@ -12,8 +12,8 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "contacts")
-public class Contact {
+@Table(name = "admins")
+public class Admin {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "id")
@@ -28,23 +28,11 @@ public class Contact {
     @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "phone", nullable = false)
-    private String phone;
+    @Column(name = "password", nullable = false)
+    private String password;
 
-    @Column(name = "zip_code", nullable = false)
-    private String zipCode;
-
-    @Column(name = "address", nullable = false)
-    private String address;
-
-    @Column(name = "building_name", nullable = false)
-    private String buildingName;
-
-    @Column(name = "contact_type", nullable = false)
-    private String contactType;
-
-    @Column(name = "body", nullable = false)
-    private String body;
+    @Column(name = "current_sign_in_at")
+    private LocalDateTime currentSignInAt;
     
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
